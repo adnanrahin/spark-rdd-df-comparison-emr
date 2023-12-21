@@ -10,7 +10,7 @@ object RecordCount {
     val spark = SparkSession
       .builder()
       .appName("RecordCount")
-      .master("local[*]")
+      //.master("local[*]")
       .getOrCreate()
 
 
@@ -19,11 +19,10 @@ object RecordCount {
       .option("header", "true")
       .option("delimiter", "\t")
       .schema(Encoders.product[PersonDomain].schema)
-      .csv("/Users/adnanrahin/source-code/scala/big-data/saprk-comparison/csv_to_parquet_test/*")
+      .csv("/sandbox/storage/data/person_identity_data/*")
 
-    df.show(20, truncate = false)
+    df.write.parquet("/sandbox/storage/data/person_identity_data/person_output_data")
 
-    println(df.count())
 
   }
 
