@@ -1,14 +1,22 @@
-package org.spark.rdd.latency.dataloader
+package org.data.transformer
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
-import org.spark.rdd.latency.domain.PersonDomain
 
-class PersonDomainDataLoader(filePath: String, spark: SparkSession) extends DataLoader {
+object LoadParquetToRDD {
 
-  override def loadRDD(): RDD[PersonDomain] = {
+  def main(args: Array[String]): Unit = {
 
-    val parquetDataFrame = this.spark.read.parquet(filePath)
+    val spark = SparkSession
+      .builder()
+      .appName("RecordCount")
+      .master("local[*]")
+      .getOrCreate()
+
+
+    val filePath = "/Users/adnanrahin/source-code/scala/big-data/spark-rdd-df-comparison-emr/person_output_data/*"
+
+    val parquetDataFrame = spark.read.parquet(filePath)
 
     val personDomainRDD: RDD[PersonDomain] = parquetDataFrame.rdd.map(row =>
       PersonDomain(
@@ -29,7 +37,8 @@ class PersonDomainDataLoader(filePath: String, spark: SparkSession) extends Data
       )
     )
 
-    personDomainRDD
+    personDomainRDD.foreach(println)
 
   }
+
 }

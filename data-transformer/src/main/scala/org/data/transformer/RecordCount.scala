@@ -30,9 +30,21 @@ object RecordCount {
       .csv(inputPath)
 
     df
-      .write
+      .write.option("sep", "")
       .mode(SaveMode.Overwrite)
       .parquet(outputPath)
+
+
+    println(df.count())
+
+    val pDf = spark
+      .read
+      .option("header", "true")
+      .option("delimiter", "\t")
+      .schema(Encoders.product[PersonDomain].schema)
+      .parquet(outputPath)
+
+    println(pDf.count())
 
 
   }
