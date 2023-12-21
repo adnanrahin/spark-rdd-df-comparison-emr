@@ -8,7 +8,7 @@ OUTPUT_PATH="/sandbox/storage/data/person_identity_data_parquet/"
 $SPARK_HOME/bin/spark-submit \
     --master spark://dev-server01:7077 \
     --deploy-mode cluster \
-    --class org.flight.analysis.FlightDataProcessor \
+    --class org.data.transformer.RecordCount \
     --name RecordCount \
     --driver-memory 4G \
     --driver-cores 4 \
