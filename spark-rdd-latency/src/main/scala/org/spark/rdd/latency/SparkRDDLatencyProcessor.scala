@@ -1,0 +1,46 @@
+package org.spark.rdd.latency
+
+import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.spark.rdd.latency.dataloader.PersonDomainDataLoader
+import org.spark.rdd.latency.datawriter.DataFileWriterLocal
+import org.spark.rdd.latency.domain.PersonDomain
+import org.spark.rdd.latency.extract.PersonDataExtract.{countTotalIIDEachState, findAllMalePerson}
+
+object SparkRDDLatencyProcessor {
+
+  def main(args: Array[String]): Unit = {
+
+    val spark = SparkSession
+      .builder()
+      .appName("SparkRDDLatencyProcessor")
+      //.master("local[*]") // Comment out if running in local standalone cluster
+      .getOrCreate()
+
+    val sc = spark.sparkContext
+
+    val dataSourcePath = args(0)
+    val dataPath = args(1)
+
+    val personDomainDataLoader: PersonDomainDataLoader = new PersonDomainDataLoader(dataSourcePath, spark)
+    val personDomainRDD: RDD[PersonDomain] = personDomainDataLoader.loadRDD()
+
+    val allMalePerson: DataFrame = {
+      findAllMalePerson(personDomainRDD, spark)
+    }
+
+    DataFileWriterLocal.dataWriter(dataFrame = allMalePerson,
+      dataPath = dataPath,
+      directoryName = "spark_rdd_comparison_data")
+
+    val personOnEachState: DataFrame = {
+      countTotalIIDEachState(personDomainRDD, spark)
+    }
+
+    DataFileWriterLocal.dataWriter(dataFrame = personOnEachState,
+      dataPath = dataPath,
+      directoryName = "spark_rdd_person_count_each_state")
+
+  }
+
+}
