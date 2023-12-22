@@ -2,16 +2,16 @@ package org.spark.rdd.latency.dataloader
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
-import org.spark.rdd.latency.domain.PersonDomain
+import org.spark.rdd.latency.domain.IpCidrCustomDomainUser
 
-class PersonDomainDataLoader(filePath: String, spark: SparkSession) extends DataLoader {
+class IpCidrCustomDomainUserDataLoader(filePath: String, spark: SparkSession) extends DataLoader {
 
-  override def loadRDD(): RDD[PersonDomain] = {
+  override def loadRDD(): RDD[IpCidrCustomDomainUser] = {
 
     val parquetDataFrame = this.spark.read.parquet(filePath)
 
-    val personDomainRDD: RDD[PersonDomain] = parquetDataFrame.rdd.map(row =>
-      PersonDomain(
+    val personDomainRDD: RDD[IpCidrCustomDomainUser] = parquetDataFrame.rdd.map(row =>
+      IpCidrCustomDomainUser(
         row.getAs[String]("firstName"),
         row.getAs[String]("lastName"),
         row.getAs[String]("email"),

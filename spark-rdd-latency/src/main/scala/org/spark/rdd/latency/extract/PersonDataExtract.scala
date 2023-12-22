@@ -3,11 +3,11 @@ package org.spark.rdd.latency.extract
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.storage.StorageLevel
-import org.spark.rdd.latency.domain.PersonDomain
+import org.spark.rdd.latency.domain.IpCidrCustomDomainUser
 
 object PersonDataExtract {
 
-  private def findAllMalePerson(personDomainRDD: RDD[PersonDomain]): RDD[PersonDomain] = {
+  private def findAllMalePerson(personDomainRDD: RDD[IpCidrCustomDomainUser]): RDD[IpCidrCustomDomainUser] = {
     val maleRDD =
       personDomainRDD
         .filter(person => person.gender.equalsIgnoreCase("Male"))
@@ -16,7 +16,7 @@ object PersonDataExtract {
     maleRDD
   }
 
-  private def countTotalIIDEachState(personDomainRDD: RDD[PersonDomain]): RDD[(String, Long)] = {
+  private def countTotalIIDEachState(personDomainRDD: RDD[IpCidrCustomDomainUser]): RDD[(String, Long)] = {
 
     val resultRdd: RDD[(String, Long)] =
       personDomainRDD
@@ -27,7 +27,7 @@ object PersonDataExtract {
     resultRdd
   }
 
-  def findAllMalePerson(personDomainRDD: RDD[PersonDomain], spark: SparkSession): DataFrame = {
+  def findAllMalePerson(personDomainRDD: RDD[IpCidrCustomDomainUser], spark: SparkSession): DataFrame = {
 
     val mostCancelledAirline = findAllMalePerson(personDomainRDD)
 
@@ -37,7 +37,7 @@ object PersonDataExtract {
 
   }
 
-  def countTotalIIDEachState(personDomainRDD: RDD[PersonDomain], spark: SparkSession): DataFrame = {
+  def countTotalIIDEachState(personDomainRDD: RDD[IpCidrCustomDomainUser], spark: SparkSession): DataFrame = {
 
     val piiIdCount = countTotalIIDEachState(personDomainRDD)
 

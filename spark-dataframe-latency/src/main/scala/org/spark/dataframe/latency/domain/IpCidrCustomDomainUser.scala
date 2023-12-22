@@ -1,6 +1,6 @@
 package org.spark.dataframe.latency.domain
 
-case class IpCidrCustomUserDomain(
+case class IpCidrCustomDomainUser(
                          firstName: String,
                          lastName: String,
                          email: String,

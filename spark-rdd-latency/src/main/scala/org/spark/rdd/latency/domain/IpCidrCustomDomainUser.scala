@@ -1,6 +1,6 @@
 package org.spark.rdd.latency.domain
 
-case class PersonDomain(
+case class IpCidrCustomDomainUser(
                          firstName: String,
                          lastName: String,
                          email: String,

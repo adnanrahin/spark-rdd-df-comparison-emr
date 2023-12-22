@@ -2,9 +2,9 @@ package org.spark.rdd.latency
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.spark.rdd.latency.dataloader.PersonDomainDataLoader
+import org.spark.rdd.latency.dataloader.IpCidrCustomDomainUserDataLoader
 import org.spark.rdd.latency.datawriter.DataFileWriterLocal
-import org.spark.rdd.latency.domain.PersonDomain
+import org.spark.rdd.latency.domain.IpCidrCustomDomainUser
 import org.spark.rdd.latency.extract.PersonDataExtract.{countTotalIIDEachState, findAllMalePerson}
 
 object SparkRDDLatencyProcessor {
@@ -22,8 +22,8 @@ object SparkRDDLatencyProcessor {
     val dataSourcePath = args(0)
     val dataPath = args(1)
 
-    val personDomainDataLoader: PersonDomainDataLoader = new PersonDomainDataLoader(dataSourcePath, spark)
-    val personDomainRDD: RDD[PersonDomain] = personDomainDataLoader.loadRDD()
+    val personDomainDataLoader: IpCidrCustomDomainUserDataLoader = new IpCidrCustomDomainUserDataLoader(dataSourcePath, spark)
+    val personDomainRDD: RDD[IpCidrCustomDomainUser] = personDomainDataLoader.loadRDD()
 
     val allMalePerson: DataFrame = {
       findAllMalePerson(personDomainRDD, spark)

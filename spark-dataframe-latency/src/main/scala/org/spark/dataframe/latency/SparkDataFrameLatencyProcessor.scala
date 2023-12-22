@@ -1,7 +1,7 @@
 package org.spark.dataframe.latency
 
 import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.spark.dataframe.latency.dataloader.PersonDomainDataLoader
+import org.spark.dataframe.latency.dataloader.IpCidrCustomDomainUserDataLoader
 import org.spark.dataframe.latency.datawriter.DataFileWriterLocal
 import org.spark.dataframe.latency.extract.PersonDataExtract.{countTotalIIDEachState, findAllMalePerson}
 
@@ -20,7 +20,8 @@ object SparkDataFrameLatencyProcessor {
     val dataSourcePath = args(0)
     val dataPath = args(1)
 
-    val personDomainDataLoader: PersonDomainDataLoader = new PersonDomainDataLoader(dataSourcePath, spark)
+    val personDomainDataLoader: IpCidrCustomDomainUserDataLoader =
+      new IpCidrCustomDomainUserDataLoader(dataSourcePath, spark)
     val personDomainDF: DataFrame = personDomainDataLoader.loadDF()
 
     val allMalePerson: DataFrame = findAllMalePerson(personDomainDF)
