@@ -12,7 +12,7 @@ class PersonDomainDataLoader(filePath: String, spark: SparkSession) extends Data
       .option("header", "true")
       .option("delimiter", "\t")
       .schema(Encoders.product[PersonDomain].schema)
-      .csv(filePath)
+      .parquet(filePath)
 
     personDomainDF
   }
