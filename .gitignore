@@ -36,6 +36,8 @@ build/
 .idea
 input_data
 person_output_data
+person_output_data_df
+person_output_data_rdd
 
 ### Mac OS ###
 .DS_Store
