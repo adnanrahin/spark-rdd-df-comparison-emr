@@ -1,7 +1,7 @@
 package org.spark.dataframe.latency.dataloader
 
 import org.apache.spark.sql.{DataFrame, Encoders, SparkSession}
-import org.spark.dataframe.latency.domain.PersonDomain
+import org.spark.dataframe.latency.domain.IpCidrCustomUserDomain
 
 class PersonDomainDataLoader(filePath: String, spark: SparkSession) extends DataLoader {
 
@@ -11,7 +11,7 @@ class PersonDomainDataLoader(filePath: String, spark: SparkSession) extends Data
       .read
       .option("header", "true")
       .option("delimiter", "\t")
-      .schema(Encoders.product[PersonDomain].schema)
+      .schema(Encoders.product[IpCidrCustomUserDomain].schema)
       .parquet(filePath)
 
     personDomainDF
