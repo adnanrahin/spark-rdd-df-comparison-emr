@@ -10,7 +10,7 @@ $SPARK_HOME/bin/spark-submit \
     --master spark://dev-server01:7077 \
     --deploy-mode cluster \
     --class org.spark.rdd.latency.SparkRDDLatencyProcessor \
-    --name FlightDataProcessorSpark \
+    --name SparkRDDLatencyProcessor \
     --driver-memory 4G \
     --driver-cores 4 \
     --executor-memory 8G \
